@@ -22,10 +22,12 @@ shaclgen ${GRAPH} -ns http://orkg.org/orkg/shapes/ orkgsh -p prefixes.json | rap
 docker run --rm --volume $PWD:/query --network triple aksw/query http://fuseki:3030/orkg /query/${CLASSES_QUERY} -t /query/${CLASSES} -f nt
 docker run --rm --volume $PWD:/query --network triple aksw/query http://fuseki:3030/orkg /query/${PREDICATES_QUERY} -t /query/${PREDICATES} -f nt
 
-LOG="${LOG}"$( wc -l $SHAPES)"\n"
-LOG="${LOG}"$( wc -l $CLASSES)"\n"
-LOG="${LOG}"$( wc -l $PREDICATES)"\n"
+LOG="${LOG}"$SHAPES: $( wc -l $SHAPES)"\n"
+LOG="${LOG}"$CLASSES: $( wc -l $CLASSES)"\n"
+LOG="${LOG}"$PREDICATES: $( wc -l $PREDICATES)"\n"
 cat ${CLASSES} ${PREDICATES} ${SHAPES} | sort -u > ${EXPORT}
+
+LOG="${LOG}"$EXPORT: $( wc -l $EXPORT)"\n"
 
 rm ${CLASSES} ${PREDICATES} ${SHAPES}
 
