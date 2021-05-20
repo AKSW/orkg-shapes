@@ -1,0 +1,34 @@
+
+name: Update ORKG shapes
+
+on:
+  workflow_dispatch:
+  #schedule:
+    # * is a special character in YAML so you have to quote this string
+    #- cron:  '0 4 * * *'
+
+jobs:
+  update-shapes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Check out Model Repository 🗃️
+        uses: actions/checkout@v2
+        with:
+          repository: 'AKSW/orkg-dump'
+          path: 'orkg-dump'
+      - name: Create docker network 🖧
+        run: docker network create data
+      - name: Run Triple Store 📑
+        run: docker run -v ${{ github.workspace }}/orkg-dump:/staging --network data --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/orkg.nt /orkg
+      - name: Set Git user
+        run: |
+          git config user.email "orkg-shape-bot@example.org"
+          git config user.name "ORKG Shape Bot"
+      - name: Install raptor utils
+        run: sudo apt-get install raptor2-utils
+      - name: Extract shapes and update
+        run: ./extract.sh
+      - name: Push updates
+        run: git push
