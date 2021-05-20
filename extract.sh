@@ -1,7 +1,7 @@
 #!/bin/sh
 
 LC_ALL=C
-GRAPH=../orkg-dump/orkg.nt
+GRAPH=orkg-dump/orkg.nt
 SHAPES=shapes.nt
 CLASSES=classes.nt
 PREDICATES=predicates.nt
@@ -19,8 +19,8 @@ LOG=""
 LOG="${LOG}"$( date '+%Y-%m-%d %H.%M.%S%z' )"\n"
 
 shaclgen ${GRAPH} -ns http://orkg.org/orkg/shapes/ orkgsh -p prefixes.json | rapper -i turtle - http://example.org/ > ${SHAPES}
-docker run --rm --volume $PWD:/query --network triple aksw/query http://fuseki:3030/orkg /query/${CLASSES_QUERY} -t /query/${CLASSES} -f nt
-docker run --rm --volume $PWD:/query --network triple aksw/query http://fuseki:3030/orkg /query/${PREDICATES_QUERY} -t /query/${PREDICATES} -f nt
+docker run --rm --volume $PWD:/query --network data aksw/query http://fuseki:3030/orkg /query/${CLASSES_QUERY} -t /query/${CLASSES} -f nt
+docker run --rm --volume $PWD:/query --network data aksw/query http://fuseki:3030/orkg /query/${PREDICATES_QUERY} -t /query/${PREDICATES} -f nt
 
 LOG="${LOG}"$SHAPES: $( wc -l $SHAPES)"\n"
 LOG="${LOG}"$CLASSES: $( wc -l $CLASSES)"\n"
