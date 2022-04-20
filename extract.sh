@@ -12,7 +12,7 @@ EXPORT=orkg-shapes.nt
 SOURCE_URL=http://orkg.org/orkg/
 
 # Install shaclgen from my fork
-pip install git+https://github.com/white-gecko/shaclgen@feature/usePoetry
+pip install git+https://github.com/white-gecko/shaclgen@feature/improvements
 
 MESSAGE="Update ORKG Shapes"
 LOG=""
