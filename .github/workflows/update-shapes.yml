@@ -18,6 +18,8 @@ jobs:
         with:
           repository: 'AKSW/orkg-dump'
           path: 'orkg-dump'
+      - name: Combine graph again
+        run: cat ${{ github.workspace }}/orkg-dump/orkg-*.nt > ${{ github.workspace }}/orkg-dump/orkg.nt
       - name: Create docker network 🖧
         run: docker network create data
       - name: Run Triple Store 📑
